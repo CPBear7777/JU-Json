@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Unity WebGL Player | JScallUnity</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css" />
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      //生成
+      var unityInstance = UnityLoader.instantiate(
+        "unityContainer",
+        "Build/webGL.json",
+        { onProgress: UnityProgress }
+      );
+
+      //傳到Unity
+      function sendBackMessage() {
+        var message = document.getElementById("htmlinput").value;
+        console.log("Sending message to Unity：" + message);
+        unityInstance.SendMessage("Bridge", "SendToUnity", message);
+      }
+    </script>
+    <script>
+      var recaptureInputAndFocus = function () {
+        var canvas = document.getElementById("#canvas");
+        if (canvas) {
+          canvas.setAttribute("tabindex", "1");
+          canvas.focus();
+        } else setTimeout(recaptureInputAndFocus, 100);
+      };
+      recaptureInputAndFocus();
+    </script>
+    <style>
+      input,
+      button {
+        padding: 10px;
+        border: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 540px"></div>
+        <div>
+          <input placeholder="Enter Text..." id="htmlinput" /><button
+            onclick="sendBackMessage()"
+          >
+            Send to Unity
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label>Name:</label>
+      <span id="name"></span>
+    </div>
+    <div>
+      <label>ID:</label>
+      <span id="ID"></span>
+    </div>
+    <div>
+      <label>PNr:</label>
+      <span id="PNr"></span>
+    </div>
+    <div>
+      <label>Color:</label>
+      <span id="color"></span>
+    </div>
+  </body>
+</html>
